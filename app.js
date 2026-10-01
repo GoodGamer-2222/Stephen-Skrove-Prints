@@ -102,7 +102,7 @@ async function send(e) {
     last = { email: d.email }; cart = []; save(); location.hash = "/thanks";
   } catch (x) {
     b.disabled = false; b.textContent = "Send order request";
-    $("#err").textContent = "That didn't send. Please try again, or email us directly at " + SHOP.email + ".";
+    $("#err").textContent = "That didn't send. Please try again, or email us directly at " + SHOP.contactEmail + ".";
   }
 }
 
@@ -114,6 +114,6 @@ function render() {
   nav(); window.scrollTo(0, 0);
 }
 $("#brand").textContent = SHOP.name;
-$("#foot").innerHTML = `${esc(SHOP.name)} · ${esc(SHOP.area)} · <a href="mailto:${esc(SHOP.email)}">${esc(SHOP.email)}</a>`;
+$("#foot").innerHTML = `${esc(SHOP.name)} · ${esc(SHOP.area)} · <a href="mailto:${esc(SHOP.contactEmail)}">${esc(SHOP.contactEmail)}</a>`;
 addEventListener("hashchange", render);
 render();

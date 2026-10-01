@@ -1,9 +1,10 @@
 // ===== EDIT THIS FILE to change shop info and products =====
 const SHOP = {
-  name: "YourName 3D Prints",                    // placeholder: replace with your shop name
-  email: "3f9c325b5938415c6dbc39059dd14b69",    // order requests are emailed here
-  area: "Grants Pass",                         // e.g. "Grants Pass"
-  payment: "cash, Venmo, or Zelle"            // shown on the confirmation page
+  name: "YourName 3D Prints",          // placeholder: replace with your shop name
+  email: "you@example.com",            // FormSubmit address or alias: order requests go here (not shown to customers)
+  contactEmail: "you@example.com",     // shown to customers in the footer and error messages
+  area: "your area",                   // e.g. "Grants Pass"
+  payment: "cash, Venmo, or Zelle"     // shown on the confirmation page
 };
 
 // Swatch colors for the color buttons. Add any new color name here.
@@ -16,7 +17,7 @@ const COLORS = {
 // To add a product, copy one block. "image" is optional: put a file in images/ and
 // use e.g. image: "images/dragon.jpg". Without one, a placeholder is shown.
 const PRODUCTS = [
-  { id: "dragon", name: "Articulated Dragon", price: 14, icon: "🐲",
+  { id: "dragon", name: "Articulated Dragon", price: 14, icon: "🐉",
     desc: "A flexible dragon printed in one piece. Poseable, and fun to fidget with.",
     details: "PLA plastic, about 25 cm long. Moves right off the print bed.",
     colors: ["Red", "Green", "Purple", "Rainbow"], image: "" },
