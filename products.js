@@ -3,7 +3,7 @@ const SHOP = {
   name: "YourName 3D Prints",          // placeholder: replace with your shop name
   email: "3f9c325b5938415c6dbc39059dd14b69",  // FormSubmit address or alias: order requests go here (not shown to customers)
   contactEmail: "stephenskrove@gmail.com",    // shown to customers in the footer and error messages
-  meetupSpots: [],                      // public meetup places customers can pick, e.g. ["Library parking lot", "Cafe name, front door"]
+  meetupSpots: ["Dutch Bros Coffee, 332 N.W. 6th St.", ],                      // public meetup places customers can pick, e.g. ["Library parking lot", "Cafe name, front door"]
   area: "Grants Pass",                  // shown on the home page and footer
   payment: "cash, Venmo, or Zelle"     // shown on the confirmation page
 };
