@@ -10,6 +10,10 @@ const count = () => cart.reduce((t, c) => t + c.q, 0);
 const img = p => p.image ? `<div class="pimg"><img src="${p.image}" alt="${esc(p.name)}"></div>` : `<div class="ph" role="img" aria-label="${esc(p.name)}">${p.icon || "🧩"}</div>`;
 const card = p => `<a class="card" href="#/product/${p.id}">${img(p)}<div class="t"><b>${esc(p.name)}</b><span class="price">${money(p.price)}</span></div></a>`;
 
+const out = (p, c) => (p.soldOut || []).includes(c);
+const avail = p => p.colors.filter(c => !out(p, c));
+const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}"><input type="radio" name="color" value="${c}" ${out(p, c) ? "disabled" : c === avail(p)[0] ? "checked" : ""}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${esc(c)}${out(p, c) ? " (sold out)" : ""}</label>`).join("");
+
 const views = {
   home: () => `
     <section class="hero">
@@ -37,11 +41,11 @@ const views = {
         <h1 style="font-size:2.2rem">${esc(p.name)}</h1>
         <p class="price" style="font-size:1.4rem">${money(p.price)}</p>
         <p>${esc(p.desc)}</p><p style="color:var(--mute)">${esc(p.details)}</p>
-        <b>Color</b>
-        <div class="sw">${p.colors.map((c, i) => `<label><input type="radio" name="color" value="${c}" ${i ? "" : "checked"}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${c}</label>`).join("")}</div>
+        ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}<b>Color</b>
+        <div class="sw">${swatches(p)}</div><small style="color:var(--mute)">Colors vary slightly from spool to spool.</small>
         <b><label for="q">Quantity</label></b><br>
         <input id="q" type="number" name="q" min="1" max="20" value="1"><br><br>
-        <button class="btn">Add to request list</button>
+        <button class="btn" ${avail(p).length ? "" : "disabled"}>Add to request list</button>
         <p id="added" role="status"></p>
       </form></div>`;
   },

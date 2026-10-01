@@ -47,3 +47,5 @@ form label.f{display:block;font-weight:600;margin:1rem 0 .25rem}
 .err{color:#b3261e;margin-top:.5rem}
 .hp{position:absolute;left:-9999px}
 footer{color:var(--mute);border-top:1px solid var(--line);margin-top:3rem;font-size:.95rem}
+.sw label.out{opacity:.5;cursor:not-allowed;text-decoration:line-through}
+.dot{width:18px;height:18px;flex:none}
