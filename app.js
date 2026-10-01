@@ -42,7 +42,7 @@ const views = {
         <p class="price" style="font-size:1.4rem">${money(p.price)}</p>
         <p>${esc(p.desc)}</p><p style="color:var(--mute)">${esc(p.details)}</p>
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}<b>Color</b>
-        <div class="sw">${swatches(p)}</div><small style="color:var(--mute)">Colors vary slightly from spool to spool.</small>
+        <div class="sw">${swatches(p)}</div><small style="display:block;margin:-.5rem 0 1.2rem;color:var(--mute)">Colors vary slightly from spool to spool.</small>
         <b><label for="q">Quantity</label></b><br>
         <input id="q" type="number" name="q" min="1" max="20" value="1"><br><br>
         <button class="btn" ${avail(p).length ? "" : "disabled"}>Add to request list</button>
