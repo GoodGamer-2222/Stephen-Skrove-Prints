@@ -23,7 +23,7 @@ const ALL = Object.keys(COLORS);
 // "note" is an optional notice shown on the product page.
 const PRODUCTS = [
   { id: "benchy", name: "Benchy Boat", price: 5, icon: "🚢",
-    desc: "The classic little 3D-printing tugboat. A fun desk decoration or small gift.",
+    desc: "The classic little 3D-printed tugboat. A fun desk decoration or small gift.",
     details: "Printed in PLA plastic.",
     colors: ALL, soldOut: [], note: "", image: "" },
   { id: "shooter", name: "Disk Shooter", price: 12, icon: "🎯",
