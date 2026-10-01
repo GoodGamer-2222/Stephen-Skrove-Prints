@@ -1,9 +1,9 @@
 // ===== EDIT THIS FILE to change shop info and products =====
 const SHOP = {
-  name: "YourName 3D Prints",          // placeholder: replace with your shop name
-  email: "stephenskrove@gmail.com",    // order requests are emailed here
-  area: "Grants Pass",                   // e.g. "Grants Pass"
-  payment: "cash, Venmo, or Zelle"     // shown on the confirmation page
+  name: "YourName 3D Prints",                    // placeholder: replace with your shop name
+  email: "3f9c325b5938415c6dbc39059dd14b69",    // order requests are emailed here
+  area: "Grants Pass",                         // e.g. "Grants Pass"
+  payment: "cash, Venmo, or Zelle"            // shown on the confirmation page
 };
 
 // Swatch colors for the color buttons. Add any new color name here.
