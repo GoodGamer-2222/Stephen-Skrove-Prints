@@ -7,12 +7,19 @@ const save = () => { try { localStorage.setItem("cart", JSON.stringify(cart)); }
 const total = () => cart.reduce((t, c) => t + c.price * c.q, 0);
 const count = () => cart.reduce((t, c) => t + c.q, 0);
 
-const img = p => p.image ? `<div class="pimg"><img src="${p.image}" alt="${esc(p.name)}"></div>` : `<div class="ph" role="img" aria-label="${esc(p.name)}">${p.icon || "🧩"}</div>`;
+const pics = p => p.images || [];
+const img = p => pics(p).length ? `<div class="pimg"><img src="${pics(p)[0]}" alt="${esc(p.name)}"></div>` : `<div class="ph" role="img" aria-label="${esc(p.name)}">${p.icon || "🧩"}</div>`;
+const gallery = p => {
+  const a = pics(p);
+  if (!a.length) return img(p);
+  return `<div><div class="pimg"><img id="mainimg" src="${a[0]}" alt="${esc(p.name)}"></div>` + (a.length > 1 ? `<div class="thumbs">${a.map((s, i) => `<button type="button" class="th ${i ? "" : "on"}" aria-label="Show photo ${i + 1}" onclick="showPic(this)"><img src="${s}" alt=""></button>`).join("")}</div>` : "") + `</div>`;
+};
+const showPic = b => { $("#mainimg").src = b.firstElementChild.src; document.querySelectorAll(".th").forEach(t => t.classList.toggle("on", t === b)); };
 const card = p => `<a class="card" href="#/product/${p.id}">${img(p)}<div class="t"><b>${esc(p.name)}</b><span class="price">${money(p.price)}</span></div></a>`;
 
 const out = (p, c) => (p.soldOut || []).includes(c);
 const avail = p => p.colors.filter(c => !out(p, c));
-const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}"><input type="radio" name="color" value="${c}" ${out(p, c) ? "disabled" : c === avail(p)[0] ? "checked" : ""}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${esc(c)}${out(p, c) ? " (sold out)" : ""}</label>`).join("");
+const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}"><input type="radio" name="color" value="${c}" ${out(p, c) ? "disabled" : c === (avail(p).includes(p.defaultColor) ? p.defaultColor : avail(p)[0]) ? "checked" : ""}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${esc(c)}${out(p, c) ? " (sold out)" : ""}</label>`).join("");
 
 const views = {
   home: () => `
@@ -35,7 +42,7 @@ const views = {
     const p = PRODUCTS.find(x => x.id === id);
     if (!p) return `<p>We couldn't find that product. <a href="#/shop">Back to the shop</a></p>`;
     return `<p><a href="#/shop">Back to shop</a></p>
-    <div class="product">${img(p)}
+    <div class="product">${gallery(p)}
       <form onsubmit="add(event,'${p.id}')">
         <h1 style="font-size:2.2rem">${esc(p.name)}</h1>
         <p class="price" style="font-size:1.4rem">${money(p.price)}</p>
@@ -62,15 +69,19 @@ const views = {
       <label class="f" for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email">
       <label class="f" for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel">
       <label class="f" for="ful">How would you like to get your order?</label>
-      <select id="ful" name="fulfillment"><option>Meet up in person</option><option>Local delivery (ask about fees)</option></select>
-      <label class="f" for="notes">Preferred meetup area, times, or other notes</label><textarea id="notes" name="notes" rows="3"></textarea>
+      <select id="ful" name="fulfillment" onchange="ful()"><option>Meet up in person</option><option>Local delivery (ask about fees)</option></select>
+      <div id="spotbox"><label class="f" for="spot">Meetup spot</label>
+      <select id="spot" name="meetup_spot">${(SHOP.meetupSpots || []).map(x => `<option>${esc(x)}</option>`).join("")}<option>We'll work out a public spot by email</option></select></div>
+      <div id="addrbox" hidden><label class="f" for="addr">Delivery address</label><input id="addr" name="delivery_address" autocomplete="street-address" disabled></div>
+      <label class="f" for="when">Days and times that work for you</label><input id="when" name="preferred_times" required placeholder="e.g. weekday evenings after 5, Saturday morning">
+      <label class="f" for="notes">Anything else we should know? (optional)</label><textarea id="notes" name="notes" rows="3"></textarea>
       <input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
       <p><button class="btn">Send order request</button></p><p class="err" id="err" role="alert"></p>
     </form>`;
   },
 
   thanks: () => `<section class="hero"><h1>Request sent. Thank you!</h1>
-    <p>${last ? `We sent a copy of your request details to ${esc(last.email)}. ` : ""}Here's what happens next:</p>
+    <p>Here's what happens next:</p>
     <ol><li>We'll email you soon to confirm availability and the total.</li>
     <li>We'll agree on a time and place to meet.</li>
     <li>You pay with ${esc(SHOP.payment)} when you pick up.</li></ol>
@@ -86,6 +97,7 @@ function add(e, id) {
   ex ? ex.q += q : cart.push({ id, name: p.name, color, price: p.price, q });
   save(); nav(); $("#added").innerHTML = `Added! <a href="#/order">View request list</a>`;
 }
+const ful = () => { const d = $("#ful").value.startsWith("Local"); $("#spotbox").hidden = d; $("#addrbox").hidden = !d; $("#spot").disabled = d; $("#addr").disabled = !d; $("#addr").required = d; };
 const qty = (i, d) => { cart[i].q += d; if (cart[i].q < 1) cart.splice(i, 1); save(); render(); };
 const rm = i => { cart.splice(i, 1); save(); render(); };
 const nav = () => $("#cartlink").textContent = `Request list (${count()})`;
