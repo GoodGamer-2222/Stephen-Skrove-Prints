@@ -16,14 +16,13 @@ const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}
 
 const views = {
   home: () => `
-    <section class="hero">
-      <h1>Useful, fun things, printed locally.</h1>
-      <p>Made to order in ${esc(SHOP.area)}. Pick what you like, send a request, and we'll arrange a meetup.</p>
-      <a class="btn" href="#/shop">Browse the shop</a>
+    <section class="hero sm">
+      <h1>3D-printed things, made to order in ${esc(SHOP.area)}.</h1>
+      <p>Pick what you like, send a request, and we'll set up a meetup.</p>
     </section>
+    <div class="grid">${PRODUCTS.slice(0, 6).map(card).join("")}</div>
+    ${PRODUCTS.length > 6 ? '<p><a href="#/shop">See all products</a></p>' : ""}
     <div class="layers" aria-hidden="true"></div>
-    <h2>Popular right now</h2>
-    <div class="grid">${PRODUCTS.slice(0, 3).map(card).join("")}</div>
     <section class="steps">
       <div><h3>1. Choose</h3><p>Pick products and colors, then add them to your request list.</p></div>
       <div><h3>2. Send a request</h3><p>No payment online. Just tell us who you are and how to reach you.</p></div>
