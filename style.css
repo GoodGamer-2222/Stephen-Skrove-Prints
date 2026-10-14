@@ -52,3 +52,28 @@ footer{color:var(--mute);border-top:1px solid var(--line);margin-top:3rem;font-s
 .hero.sm{padding:1rem 0 1.5rem}
 .hero.sm h1{font-size:clamp(1.7rem,5vw,2.5rem)}
 .hero.sm p{margin:0}
+.thumbs{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap}
+.th{width:64px;height:64px;padding:0;border:2px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;cursor:pointer}
+.th.on{border-color:var(--acc)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.about{display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;max-width:680px}
+.about p{margin:0;flex:1;min-width:240px;font-size:1.1rem}
+.me{width:140px;height:140px;object-fit:cover;border-radius:50%}
+details{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;margin:.5rem 0;max-width:680px}
+summary{font-weight:600;cursor:pointer}
+details p{margin:.6rem 0 0;color:var(--mute)}
+/* polish pass */
+header{border-bottom:1px solid var(--line);margin-bottom:.5rem}
+.brand{display:flex;align-items:center;gap:.6rem}
+.brand::before{content:"";width:26px;height:26px;border-radius:5px;border:2px solid var(--acc);background:repeating-linear-gradient(0deg,var(--acc) 0 3px,transparent 3px 6px);flex:none}
+nav{display:flex;align-items:center;gap:1.4rem}
+nav a{margin-left:0;padding:.3rem 0;border-bottom:2px solid transparent;transition:border-color .15s,color .15s}
+nav a:hover{border-bottom-color:var(--acc)}
+.badge{display:inline-block;min-width:1.5em;padding:0 .45em;margin-left:.2rem;border-radius:999px;background:var(--acc);color:#fff;font-size:.85em;text-align:center}
+.badge.zero{background:var(--line);color:var(--mute)}
+.card{transition:transform .15s,box-shadow .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 18px #17201d1a}
+.card .t{padding:.9rem 1rem 1rem}
+.btn{transition:background .15s,transform .1s}
+.btn:active{transform:translateY(1px)}
+@media (prefers-reduced-motion:reduce){.card,.btn,nav a{transition:none}.card:hover{transform:none}}

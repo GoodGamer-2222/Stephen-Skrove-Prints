@@ -21,6 +21,7 @@ const out = (p, c) => (p.soldOut || []).includes(c);
 const avail = p => p.colors.filter(c => !out(p, c));
 const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}"><input type="radio" name="color" value="${c}" ${out(p, c) ? "disabled" : c === (avail(p).includes(p.defaultColor) ? p.defaultColor : avail(p)[0]) ? "checked" : ""}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${esc(c)}${out(p, c) ? " (sold out)" : ""}</label>`).join("");
 
+const custom = () => `<p class="note">Want something different, like another color, size, or design? <a href="mailto:${esc(SHOP.contactEmail)}?subject=${encodeURIComponent("Custom print request")}">Email us</a> and tell us what you have in mind. We'll let you know if we can do it and what it would cost.</p>`;
 const views = {
   home: () => `
     <section class="hero sm">
@@ -36,7 +37,7 @@ const views = {
       <div><h3>3. Meet up</h3><p>We'll reply by email to set a time and place. Pay when you pick up.</p></div>
     </section>`,
 
-  shop: () => `<h2>Shop</h2><div class="grid">${PRODUCTS.map(card).join("")}</div>`,
+  shop: () => `<h2>Shop</h2><div class="grid">${PRODUCTS.map(card).join("")}</div>${custom()}`,
 
   product: id => {
     const p = PRODUCTS.find(x => x.id === id);
@@ -80,12 +81,21 @@ const views = {
     </form>`;
   },
 
+  about: () => `<h1 style="font-size:2.2rem">About</h1>
+    <section class="about">${SHOP.ownerPhoto ? `<img class="me" src="${esc(SHOP.ownerPhoto)}" alt="${esc(SHOP.ownerName || "The maker")}">` : ""}
+    <p>${SHOP.ownerName ? `Hi, I'm ${esc(SHOP.ownerName)}. ` : ""}I got a 3D printer and started making things, and I've enjoyed it ever since. It's mostly fun. Sometimes a print fails, which is annoying, but that's part of the hobby. Now I'm selling a few of my favorites to people nearby in ${esc(SHOP.area)}.</p></section>
+    <div class="layers" aria-hidden="true"></div>
+    <h2>Questions</h2>
+    ${FAQ.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}
+    <p style="margin-top:1.5rem"><a class="btn" href="#/shop">Browse the shop</a></p>`,
+
   thanks: () => `<section class="hero"><h1>Request sent. Thank you!</h1>
     <p>Here's what happens next:</p>
-    <ol><li>We'll email you soon to confirm availability and the total.</li>
+    <ol><li>We'll email you ${esc(SHOP.replyTime || "soon")} from ${esc(SHOP.contactEmail)} to confirm availability and the total.</li>
     <li>We'll agree on a time and place to meet.</li>
     <li>You pay with ${esc(SHOP.payment)} when you pick up.</li></ol>
-    <p>Nothing has been charged. Check your spam folder if you don't hear back within a day or two.</p>
+    <p>Nothing has been charged. If you don't hear back by then, check your spam folder or email us at ${esc(SHOP.contactEmail)}.</p>
+    <p>If a print has a problem, send us a photo and we'll happily refund or replace it.</p>
     <a class="btn" href="#/shop">Keep browsing</a></section>`
 };
 
@@ -100,7 +110,7 @@ function add(e, id) {
 const ful = () => { const d = $("#ful").value.startsWith("Local"); $("#spotbox").hidden = d; $("#addrbox").hidden = !d; $("#spot").disabled = d; $("#addr").disabled = !d; $("#addr").required = d; };
 const qty = (i, d) => { cart[i].q += d; if (cart[i].q < 1) cart.splice(i, 1); save(); render(); };
 const rm = i => { cart.splice(i, 1); save(); render(); };
-const nav = () => $("#cartlink").textContent = `Request list (${count()})`;
+const nav = () => $("#cartlink").innerHTML = `Request list <span class="badge${count() ? "" : " zero"}">${count()}</span>`;
 
 async function send(e) {
   e.preventDefault();
@@ -108,7 +118,6 @@ async function send(e) {
   d.items = cart.map(c => `${c.q} x ${c.name} (${c.color}) - ${money(c.price * c.q)}`).join("\n");
   d.total = money(total());
   d._subject = "New order request from " + d.name;
-  d._autoresponse = `Hi ${d.name}, thanks for your order request from ${SHOP.name}! Nothing has been charged. We'll email you ${SHOP.replyTime || "soon"} to confirm availability and set up a meetup in ${SHOP.area}. You'll pay with ${SHOP.payment} when you pick up. Questions or changes? Email us at ${SHOP.contactEmail}.`;
   d._template = "table"; d._captcha = "false";
   b.disabled = true; b.textContent = "Sending...";
   try {
@@ -130,6 +139,6 @@ function render() {
   nav(); window.scrollTo(0, 0);
 }
 $("#brand").textContent = SHOP.name;
-$("#foot").innerHTML = `${esc(SHOP.name)} · ${esc(SHOP.area)} · <a href="mailto:${esc(SHOP.contactEmail)}">${esc(SHOP.contactEmail)}</a>`;
+$("#foot").innerHTML = `${esc(SHOP.name)} · ${esc(SHOP.area)} · <a href="mailto:${esc(SHOP.contactEmail)}">${esc(SHOP.contactEmail)}</a> · <a href="mailto:${esc(SHOP.contactEmail)}?subject=Custom%20print%20request">Custom prints</a>`;
 addEventListener("hashchange", render);
 render();

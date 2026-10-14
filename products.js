@@ -1,10 +1,12 @@
 // ===== EDIT THIS FILE to change shop info and products =====
 const SHOP = {
-  name: "YourName 3D Prints",          // placeholder: replace with your shop name
+  name: "Stephen Skrove 3D Prints",     // shop name (includes the owner's real name)
   email: "3f9c325b5938415c6dbc39059dd14b69",  // FormSubmit address or alias: order requests go here (not shown to customers)
   contactEmail: "stephenskrove@gmail.com",    // shown to customers in the footer and error messages
-  meetupSpots: [],                      // public meetup places customers can pick, e.g. ["Library parking lot", "Cafe name, front door"]
-  replyTime: "within a day",             // used in the automatic reply email to customers
+  meetupSpots: ["Dutch Bros Coffee, 332 NW 6th St"],                      // public meetup places customers can pick, e.g. ["Library parking lot", "Cafe name, front door"]
+  replyTime: "within a day",             // shown on the confirmation page: how soon you'll reply
+  ownerName: "Stephen",                  // your first name, shown on the About page (leave "" to hide)
+  ownerPhoto: "",                       // e.g. "images/me.jpg" (leave "" for no photo)
   area: "Grants Pass",                  // shown on the home page and footer
   payment: "cash, Venmo, or Zelle"     // shown on the confirmation page
 };
@@ -39,4 +41,16 @@ const PRODUCTS = [
     desc: "Small, simple, and surprisingly loud.",
     details: "Printed in PLA plastic. No small parts.",
     colors: ALL, soldOut: [], note: "", images: [], defaultColor: "" }
+];
+
+// Questions shown on the About page. Edit freely: each item is ["question", "answer"].
+const FAQ = [
+  ["How does ordering work?", `Pick what you like and add it to your request list, then send the request. We'll email you from ${SHOP.contactEmail} to confirm availability and the total, and to set up a meetup.`],
+  ["Do I pay online?", `No. Nothing is charged when you send a request. You pay with ${SHOP.payment} when you pick up.`],
+  ["Where do we meet?", `At a public spot in ${SHOP.area}, which you pick on the order form. Local delivery may be possible too, so ask about fees.`],
+  ["Are the colors exact?", "Colors vary slightly from spool to spool, and silk and glitter filaments look different in person than on a screen. Tell us if a particular color matters."],
+  ["What are the products made of?", "PLA plastic, printed on a 3D printer."],
+  ["Is the Disk Shooter safe for kids?", "The disks are small and a choking hazard, so it's not for children under 3. Never aim it at faces or eyes."],
+  ["What if there's a problem with my order?", `Send a photo of the problem to ${SHOP.contactEmail} and we'll happily refund or replace it.`],
+  ["Can you make something custom?", `Maybe! Email us at ${SHOP.contactEmail} with what you have in mind. We'll tell you if we can do it and what it would cost.`]
 ];
