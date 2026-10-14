@@ -108,6 +108,7 @@ async function send(e) {
   d.items = cart.map(c => `${c.q} x ${c.name} (${c.color}) - ${money(c.price * c.q)}`).join("\n");
   d.total = money(total());
   d._subject = "New order request from " + d.name;
+  d._autoresponse = `Hi ${d.name}, thanks for your order request from ${SHOP.name}! Nothing has been charged. We'll email you ${SHOP.replyTime || "soon"} to confirm availability and set up a meetup in ${SHOP.area}. You'll pay with ${SHOP.payment} when you pick up. Questions or changes? Email us at ${SHOP.contactEmail}.`;
   d._template = "table"; d._captcha = "false";
   b.disabled = true; b.textContent = "Sending...";
   try {
