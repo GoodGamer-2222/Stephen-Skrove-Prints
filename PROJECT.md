@@ -13,7 +13,7 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - Static site (HTML/CSS/JS, no framework) hosted on GitHub Pages. Orders go through FormSubmit.
 - Files: `index.html`, `style.css`, `app.js` (logic, hash routing), `products.js` (shop info, colors, products).
 - In `products.js`: `email` = FormSubmit alias `3f9c325b5938415c6dbc39059dd14b69` (order requests go here); `contactEmail` = `stephenskrove@gmail.com` (shown to customers); `area` = Grants Pass.
-- Shop name is still the placeholder "YourName 3D Prints". Owner hasn't chosen one yet. Ideas offered: plain local ("Grants Pass 3D Prints"), regional ("Rogue Layers", recommended), or own name. Also check the matching social handle is free.
+- Shop name: "Stephen Skrove 3D Prints" (decided, option A). Chosen because Oregon generally doesn't require an assumed business name registration ($50, renewed every 2 years) when the name includes the owner's real name. Sources were inconsistent on how strict this is, so the owner should confirm with the Oregon Secretary of State and check local business license and income reporting rules. Not legal advice. Fallback if strict: name "Stephen Skrove" with "3D Prints" as a tagline. Owner's first name on the About page: Stephen.
 
 ## Business decisions
 - Orders are requests only, no online payment. Pay at meetup by cash, Venmo, or Zelle. No tax or shipping handling.
@@ -34,6 +34,9 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - Home page: option A. A one-line intro with the products right underneath, then the layer-line stripe and the how-it-works steps. Option C (a short "made by a local person" intro with a photo) is planned for later once the owner has a photo.
 - Overall look: option A, keep the current look (calm frame so the colorful products stand out). Warmer accent than teal is an option if it ever feels too plain. Current look: cool off-white background, deep teal accent, print-layer-line stripe motif, Bricolage Grotesque font.
 
+## Favicon
+- The browser tab icon is the same layered-stripes mark as the header: `favicon.svg`, `favicon.png`, and `apple-touch-icon.png` (for iPhone home screen), linked in `index.html`.
+
 ## Photos (decided)
 - Mix of approaches: print the first item of each kind, photograph it on the print bed with the owner's light, plus an in-hand shot for scale and an in-use shot.
 - Color rule (option C): main photo and in-hand photo use the same mid-tone color (blue or red work well; avoid black and white). The in-use photo can be any color.
@@ -42,22 +45,54 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 
 ## Order form (decided: option B)
 - Customer picks meetup or local delivery. Meetup shows a dropdown of public spots from `SHOP.meetupSpots` in `products.js` (plus "work out a spot by email"). Delivery shows an address box instead. Both ask for days/times that work, plus optional notes.
-- `meetupSpots` is empty until the owner picks real public spots.
+- `meetupSpots` currently has one spot: "Dutch Bros Coffee, 332 NW 6th St". More can be added.
 - The confirmation page previously claimed a copy was emailed to the customer. That was wrong (FormSubmit doesn't do that by default), so the sentence was removed.
 
-## Customer auto-reply (decided: option B)
-- Short acknowledgment email sent by FormSubmit (`_autoresponse` field, built in `send()` in `app.js`). It uses the customer's name, shop name, area, payment methods, `contactEmail`, and `replyTime` from `products.js`. No order copy in it.
-- Needs a test order to confirm it arrives (check spam).
+## Customer replies (decided: option A)
+- The FormSubmit auto-reply never worked and was removed. The owner replies personally to each request (FormSubmit sets the customer as reply-to, so just hit Reply).
+- The confirmation page says who the reply comes from (`contactEmail`) and how soon (`replyTime` in `products.js`), and to check spam.
+- Reply template: "Hi [name], thanks for your order! [qty x item (color): available / ready by date / sold out, alternatives]. Total: $__, paid by cash, Venmo, or Zelle at pickup. Meetup: [spot] on [day] at [time]. Does that work? Let me know and I'll get printing."
+
+## Custom orders (decided: option B)
+- No form. A note on the shop page and a "Custom prints" footer link open an email to `contactEmail` with the subject "Custom print request". Owner decides each request case by case.
+
+## Availability and lead time (decided: option A, for now)
+- The site says nothing about lead time. The owner answers it in the personal reply. When bigger, longer-printing items are added, revisit with option C (a lead time per product, e.g. a `leadTime` field shown on the product page).
+
+## Website address (decided: option A)
+- Use the free GitHub Pages address. The site is partly just for fun. A custom domain can be added later.
+
+## About and FAQ page (decided and built)
+- New `#/about` page, linked in the header: short story, FAQ list (editable `FAQ` array in `products.js`), and a "Browse the shop" button. Owner name shown (`ownerName` in `products.js`, currently blank until the owner supplies it); photo later via `ownerPhoto`.
+- Story text (Claude's edit of the owner's rough wording): got a printer, enjoys it, sometimes a print fails and that's annoying, now selling favorites locally.
+- Visual polish pass (hover effects, tidier header/intro, nicer illustrations) is planned for after real photos exist.
+
+## Problem prints (decided: option B)
+- If a customer sends a photo of a problem, the owner will happily refund or replace. Stated in the About page FAQ and on the confirmation page.
+
+## Visual polish (decided: option A, done)
+- Header has a layer-stripe mark next to the shop name and a bottom border. Nav links underline on hover. The request list count is a badge. Product cards lift on hover. Buttons have press feedback. Respects reduced-motion. Colors and layout unchanged.
+- Bigger visual gain still waits on real product photos.
+
+## Link previews (decided: text now, image later)
+- Title, description, and Open Graph tags are in `index.html` (name and description hardcoded there, so update them if the shop name or area changes).
+- Later: add `og:image` (needs the final site address and a good image or product photo).
+
+## Launch (decided: soft launch first, option A)
+- Share the link with a few friends or family first. Ask them to place a real order request from their phone, then reply to each personally and set up a meetup.
+- Ask them: Was it clear what to do? Did anything confuse you? Did the form and confirmation work? Anything look off on your phone?
+- Check that requests arrive (and not in spam), and that colors, prices, and meetup spots look right.
+- After feedback, decide on a public launch (local groups) and whether to wait for photos first.
 
 ## Next decision
-- Custom orders: not offered, a "ask about a custom print" email link (recommended), or a dedicated custom-request form.
+- To be decided after the soft launch feedback: public launch timing, fixes from feedback, then the visual pass around real photos and the link preview image.
 
 ## To do
-- [ ] Test the customer auto-reply with an order from a different email address
 - [ ] Push latest files to GitHub, test on a phone
-- [ ] Choose shop name
-- [ ] Pick public meetup spots and fill in `meetupSpots` in `products.js`
+- [ ] Confirm the name/registration question with the Oregon Secretary of State
+- [ ] Consider adding more public meetup spots to `meetupSpots` in `products.js`
 - [ ] Take and add real product photos
 - [ ] Owner to check descriptions, add sizes, confirm prices
-- [ ] Add "made by a local person" intro (option C) when a photo exists
+- [ ] Add own photo (`ownerPhoto`) for the About page
+- [ ] Add `og:image` link preview picture once photos and site address are final
 - [ ] Later ideas: payment links, shipping options, size options, per-color photos
