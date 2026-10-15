@@ -9,9 +9,10 @@ const count = () => cart.reduce((t, c) => t + c.q, 0);
 
 const pics = p => p.images || [];
 const mark = p => {
-  const c = (CATS[p.cat] || {}).color || "#0e6f62";
-  const t = p.mystery ? "?" : p.name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join("");
-  return `<svg viewBox="0 0 32 32" role="img" aria-label="${esc(p.name)}"><rect x="1" y="1" width="30" height="30" rx="5" fill="${c}"/><rect x="1" y="7.5" width="30" height="3" fill="#f4f6f5"/><rect x="1" y="14.5" width="30" height="3" fill="#f4f6f5"/><rect x="1" y="21.5" width="30" height="3" fill="#f4f6f5"/><rect x="7" y="11" width="18" height="10" rx="3" fill="#fff"/><text x="16" y="18.6" text-anchor="middle" font-size="7.5" font-weight="800" font-family="system-ui,sans-serif" fill="${c}">${t}</text></svg>`;
+  const c = (CATS[p.cat] || {}).color || "#0e6f62", g = ICONS[p.icon];
+  const t = p.name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+  const art = g ? `<g fill="#fff" stroke="${c}" stroke-width="1" stroke-linejoin="round">${g(c)}</g>` : `<text x="16" y="20" text-anchor="middle" font-size="11" font-weight="800" font-family="system-ui,sans-serif" fill="#fff">${t}</text>`;
+  return `<svg viewBox="0 0 32 32" role="img" aria-label="${esc(p.name)}"><rect x="1" y="1" width="30" height="30" rx="5" fill="${c}"/><g fill="#fff" opacity=".16"><rect x="1" y="7.5" width="30" height="3"/><rect x="1" y="14.5" width="30" height="3"/><rect x="1" y="21.5" width="30" height="3"/></g>${art}</svg>`;
 };
 const img = p => pics(p).length ? `<div class="pimg"><img src="${pics(p)[0]}" alt="${esc(p.name)}"></div>` : `<div class="ph">${mark(p)}</div>`;
 const gallery = p => {
@@ -43,7 +44,7 @@ const views = {
       <p>Pick what you like, send a request, and we'll set up a meetup.</p>
     </section>
     <div class="grid">${PRODUCTS.filter(p => p.featured).map(card).join("")}</div>
-    <p><a class="btn" href="#/shop">Browse all ${PRODUCTS.length} products</a></p>
+    <p><a class="btn" href="#/shop">See all products</a></p>
     <div class="layers" aria-hidden="true"></div>
     <section class="steps">
       <div><h3>1. Choose</h3><p>Pick products and colors, then add them to your request list.</p></div>
