@@ -15,10 +15,10 @@ const SHOP = {
 // Categories: "words" are extra search keywords. "color" tints the placeholder picture.
 const CATS = {
   animals:    { label: "Animals", color: "#2f5fb8", words: "animal animals pet critter toy toys" },
-  vehicles:   { label: "Vehicles", color: "#0e6f62", words: "vehicle vehicles toy toys" },
-  desk:       { label: "Desk Toys", color: "#7a4bb5", words: "desk toy toys fidget" },
-  functional: { label: "Functional", color: "#b0405a", words: "functional useful practical" },
-  mystery:    { label: "Mystery Boxes", color: "#b8741a", words: "mystery box boxes surprise gift random" }
+  vehicles:   { label: "Vehicles", color: "#0e6f62", words: "vehicle vehicles toy toys vroom kids play hotwheels" },
+  desk:       { label: "Desk Toys", color: "#7a4bb5", words: "desk toy toys fidget decor decoration" },
+  functional: { label: "Functional", color: "#b0405a", words: "functional useful practical working helpful" },
+  mystery:    { label: "Mystery Boxes", color: "#b8741a", words: "mystery box boxes surprise gift random idk" }
 };
 
 // Color swatches (any CSS background). "Colored" shows as white with colored splashes.
@@ -43,8 +43,8 @@ const PRODUCTS = [
     desc: "A garbage truck full of moving mechanics. The rear hopper and bed tilt mechanism haul mini payloads, and a working trash can arm picks up the trash cans. It's wheels move, and it comes with 2 trash cans that have working lids and wheels." },
   { ...D, id: "rocket-truck", icon: "rocket", name: "Rocket Launcher Truck", price: 13, cat: "vehicles", colors: GGWC,
     desc: "A rugged truck with a moving, rotating rocket pod assembly. The wheels move too, so it rolls along. Great for pretend play or a desk display. Based on the RM-70 Vampire 4D rocket launcher. Design by SHR3D.eu on Printables." },
-  { ...D, id: "tow-truck", note: "Small parts warning: this model has small parts, so it is not suitable for small children.", icon: "tow", name: "Flatbed Tow Truck", price: 14.5, cat: "vehicles", colors: GWC,
-    desc: "A flatbed tow truck with a functional ramp on the back for driving other model cars (not included) onto the flatbed. Load one up and haul it away. The ramp folds and the wheels rotate. Design by SHR3D.eu on Printables." },
+  { ...D, id: "tow-truck", note: "Small parts warning: this model has small parts, so it is not suitable for small children.", icon: "tow", name: "Flatbed Tow Truck With Car", price: 15, cat: "vehicles", colors: GWC,
+    desc: "A detail flatbed tow truck with a functional ramp on the back for driving other model cars (like the included Skoda 120 car) onto the flatbed. Load one up and haul it away. The ramp folds and the wheels rotate. The included small car has working wheels and lots of detail. Design by SHR3D.eu on Printables." },
   { ...D, id: "cement-mixer", tags: "truck", icon: "mixer", name: "Cement Mixer", price: 14, cat: "vehicles", colors: GWC,
     desc: "A construction site workhorse. The barrel rotates by hand, and the chassis has working wheels, so you can roll it around the job site. Design by SHR3D.eu on Printables." },
   { ...D, id: "backhoe", tags: "construction", icon: "backhoe", name: "Backhoe", price: 12, cat: "vehicles", colors: GYWC,
