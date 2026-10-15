@@ -31,8 +31,8 @@ const custom = () => `<p class="note">Want something different, like another col
 let sq = "", scat = "";
 const chips = () => ["", ...Object.keys(CATS)].map(k => `<button type="button" class="chip" aria-pressed="${scat === k}" onclick="setCat('${k}')">${k ? CATS[k].label : "All"}</button>`).join("");
 const list = () => {
-  const w = sq.toLowerCase().split(/\s+/).filter(Boolean);
-  const r = PRODUCTS.filter(p => (!scat || p.cat === scat) && w.every(x => `${p.name} ${p.desc} ${CATS[p.cat].label} ${CATS[p.cat].words}`.toLowerCase().includes(x)));
+  const w = sq.toLowerCase().split(/\s+/).filter(Boolean).map(x => x.length > 3 ? x.replace(/s$/, "") : x);
+  const r = PRODUCTS.filter(p => { const tk = `${p.name} ${p.tags || ""} ${CATS[p.cat].label} ${CATS[p.cat].words}`.toLowerCase().split(/\W+/); return (!scat || p.cat === scat) && w.every(x => tk.some(t => t.startsWith(x))); });
   return r.length ? r.map(card).join("") : `<p>No matches. Try another word, or <a href="mailto:${esc(SHOP.contactEmail)}?subject=${encodeURIComponent("Custom print request")}">ask about a custom print</a>.</p>`;
 };
 const setQ = v => { sq = v; $("#list").innerHTML = list(); };

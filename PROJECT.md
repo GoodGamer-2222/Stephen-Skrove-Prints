@@ -11,7 +11,7 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 
 ## Setup
 - Static site (HTML/CSS/JS, no framework) hosted on GitHub Pages. Orders go through FormSubmit.
-- Files: `index.html`, `style.css`, `app.js` (logic, hash routing), `products.js` (shop info, colors, products).
+- Files: `index.html`, `style.css`, `app.js` (logic, hash routing), `icons.js` (placeholder icons), `products.js` (shop info, categories, colors, products), plus `favicon.svg`, `favicon.png`, `apple-touch-icon.png`.
 - In `products.js`: `email` = FormSubmit alias `3f9c325b5938415c6dbc39059dd14b69` (order requests go here); `contactEmail` = `stephenskrove@gmail.com` (shown to customers); `area` = Grants Pass.
 - Shop name: "Stephen Skrove 3D Prints" (decided, option A). Chosen because Oregon generally doesn't require an assumed business name registration ($50, renewed every 2 years) when the name includes the owner's real name. Sources were inconsistent on how strict this is, so the owner should confirm with the Oregon Secretary of State and check local business license and income reporting rules. Not legal advice. Fallback if strict: name "Stephen Skrove" with "3D Prints" as a tagline. Owner's first name on the About page: Stephen.
 
@@ -21,12 +21,12 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - Customers build a "request list" (cart), fill a form (name, email, optional phone, meetup/delivery, notes), and get a confirmation page with next steps.
 
 ## Products (replaced with the owner's full starting list: 23 items + 6 mystery boxes)
-- 4 categories: Vehicles (12), Articulated Toys (2), Desk Toys & Functional (9, includes Benchy, statues, thumb piano/drum, wallet, fidget stick, fake egg, fish tank sign), Mystery Boxes (6).
-- Shop page has live search (name, description, category keywords) and category buttons. Home page shows only products with `featured: true` (Working Garbage Truck, Articulated Gecko, Flexi Chicken) plus a "Browse all" button.
+- 5 categories: Animals (gecko, chicken, wolf, cat), Vehicles (12), Desk Toys (thumb piano, thumb drum, fidget stick, Benchy), Functional (flat wallet, fish tank sign, fake egg), Mystery Boxes (6).
+- Shop page has live search (product name, `tags`, category keywords; descriptions are not searched, so "car" doesn't return trucks; plural "cars" works) and category buttons. Home page shows only products with `featured: true` (Working Garbage Truck, Articulated Gecko, Flexi Chicken) plus a "See all products" button.
 - Color option "Painted" was renamed "Colored" (rainbow swatch). Fish Tank Sign has one option, "Gray/Black and White". Colors per product follow the owner's list.
 - Descriptions were lightly tidied. Facts were kept as the owner wrote them.
-- Mystery boxes: a 4-item and an 8-item box for cars, articulated toys, and desk toys/functional items. No color choice (`mystery: true`); the request list shows "Surprise". Prices (38/72, 30/56, 24/44) are PLACEHOLDERS the owner must set.
-- Placeholder pictures are now generated in code (`mark()` in `app.js`): the favicon-style striped square, tinted per category, with the product's initials ("?" for mystery boxes). They are replaced automatically when a product gets `images`.
+- Mystery boxes: a 4-item and an 8-item box for cars, articulated toys, and desk toys/functional items. No color choice (`mystery: true`); the request list shows "Surprise". Prices set by the owner: $25 for a 4-item box, $40 for an 8-item box.
+- Placeholder pictures (owner chose option A): simple flat white icons (truck, semi, gecko, cat, etc.) drawn in code in `icons.js` on a favicon-style square tinted per category. Each product has an `icon` key in `products.js`. Real AI-generated images aren't possible for Claude here. Icons were not visually previewed by Claude (no renderer available), so the owner should check how they look and report any that look off. Replaced automatically when a product gets `images`.
 - Removed with this change: Disk Shooter, Whistle, silk/glitter colors, and the Disk Shooter FAQ and small-parts notice (they weren't on the new list). Restore from the old `products.js` if wanted.
 - Photos: see Photos section. Check that each design's license allows selling prints (still open).
 
@@ -86,7 +86,7 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - After feedback, decide on a public launch (local groups) and whether to wait for photos first.
 
 ## Next decision
-- Mystery box prices and rules (placeholders now), what "Colored" means for customers, and whether the 8-item articulated box is realistic with only 2 articulated designs.
+- Open items: what "Colored" means for customers, whether to offer an 8-item articulated box with only 2 designs, and feedback on how the icons look.
 
 ## To do
 - [ ] Push latest files to GitHub, test on a phone

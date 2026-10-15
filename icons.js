@@ -16,7 +16,7 @@ const ICONS = {
   bobcat: c => `<rect x="9" y="11" width="13" height="8" rx="2"/><path d="M23 10h6l-1 8h-5z"/>${W(11, 22)}${W(20, 22)}`,
   van: c => `<path d="M3 20V12a2 2 0 012-2h16l6 6v4z"/>${W(9, 22)}${W(23, 22)}`,
   car: c => `<path d="M3 20v-4l4-1 3-5h9l3 5h6v5z"/>${W(9, 22)}${W(23, 22)}`,
-  gecko: c => `<ellipse cx="14" cy="16" rx="7" ry="4"/><circle cx="22" cy="14" r="3"/><circle cx="9" cy="19" r="2"/><circle cx="6" cy="21" r="1.6"/><circle cx="4" cy="23" r="1.2"/><circle cx="10" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/><circle cx="10" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/>`,
+  gecko: c => `<ellipse cx="14" cy="16" rx="7" ry="4"/><circle cx="22" cy="14" r="3"/><circle cx="9" cy="17.5" r="2"/><circle cx="6.2" cy="18.3" r="1.6"/><circle cx="4" cy="19" r="1.2"/><circle cx="10" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/><circle cx="10" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/>`,
   chicken: c => `<path d="M7 14l-4-4 1 7z"/><rect x="12" y="21" width="1.6" height="5"/><rect x="17" y="21" width="1.6" height="5"/><ellipse cx="15" cy="17" rx="8" ry="6"/><circle cx="22" cy="10" r="3.5"/><path d="M25 10l3 1-3 1z"/><path d="M20 7l2-3 2 3z"/>`,
   piano: c => `<rect x="5" y="9" width="22" height="14" rx="3"/>${[9, 13, 17, 21].map(x => `<rect x="${x}" y="11" width="2" height="8" fill="${c}" stroke="none"/>`).join("")}`,
   drum: c => `<path d="M7 13v6c0 2 4 4 9 4s9-2 9-4v-6z"/><ellipse cx="16" cy="13" rx="9" ry="4"/><rect x="22" y="4" width="2" height="9" transform="rotate(25 23 8)"/>`,

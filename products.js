@@ -13,10 +13,11 @@ const SHOP = {
 
 // Categories: "words" are extra search keywords. "color" tints the placeholder picture.
 const CATS = {
-  vehicles:    { label: "Vehicles", color: "#0e6f62", words: "vehicle vehicles car cars truck trucks toy toys" },
-  articulated: { label: "Articulated Toys", color: "#2f5fb8", words: "articulated flexible flexi animal animals toy toys" },
-  desk:        { label: "Desk Toys & Functional", color: "#7a4bb5", words: "desk toy toys functional fidget decor useful" },
-  mystery:     { label: "Mystery Boxes", color: "#b8741a", words: "mystery box boxes surprise gift random" }
+  animals:    { label: "Animals", color: "#2f5fb8", words: "animal animals pet critter toy toys" },
+  vehicles:   { label: "Vehicles", color: "#0e6f62", words: "vehicle vehicles toy toys" },
+  desk:       { label: "Desk Toys", color: "#7a4bb5", words: "desk toy toys fidget" },
+  functional: { label: "Functional", color: "#b0405a", words: "functional useful practical" },
+  mystery:    { label: "Mystery Boxes", color: "#b8741a", words: "mystery box boxes surprise gift random" }
 };
 
 // Color swatches (any CSS background). "Colored" shows as a rainbow.
@@ -33,9 +34,9 @@ const SEVEN = ["Gray", "Yellow", "Red", "White", "Blue", "Purple", "Colored"];
 const SIX = ["Gray", "Yellow", "Red", "White", "Blue", "Colored"];
 
 // To add a product, copy a line. Fields: id, name, price, cat (a key from CATS), colors, desc.
-// icon: a key from ICONS in icons.js (the placeholder picture). Optional: featured: true (shows on the home page), mystery: true (no color choice),
+// tags: extra search words. icon: a key from ICONS in icons.js (the placeholder picture). Optional: featured: true (shows on the home page), mystery: true (no color choice),
 // images: ["images/x-1.jpg", ...] (first = main photo), defaultColor, soldOut: ["Red"], note: "text".
-const D = { soldOut: [], note: "", images: [], defaultColor: "" };
+const D = { soldOut: [], tags: "", note: "", images: [], defaultColor: "" };
 const PRODUCTS = [
   { ...D, id: "garbage-truck", icon: "garbage", name: "Working Garbage Truck", price: 15, cat: "vehicles", featured: true, colors: GGWC,
     desc: "Features moving mechanics, including a functional rear hopper and a bed tilt mechanism for hauling mini payloads. A working trash can arm picks up the trash cans. The wheels turn, and it comes with 2 trash cans that have working lids and wheels." },
@@ -43,59 +44,59 @@ const PRODUCTS = [
     desc: "A rugged tactical cargo carrier fitted with a moving, rotating rocket pod assembly. The wheels move too." },
   { ...D, id: "tow-truck", icon: "tow", name: "Flatbed Tow Truck", price: 14.5, cat: "vehicles", colors: GWC,
     desc: "Equipped with a functional ramp on the back for driving other model cars (not included) onto the flatbed." },
-  { ...D, id: "cement-mixer", icon: "mixer", name: "Cement Mixer", price: 14, cat: "vehicles", colors: GWC,
+  { ...D, id: "cement-mixer", tags: "truck", icon: "mixer", name: "Cement Mixer", price: 14, cat: "vehicles", colors: GWC,
     desc: "A construction site workhorse with a manually rotatable barrel mounted on a chassis with working wheels." },
-  { ...D, id: "backhoe", icon: "backhoe", name: "Backhoe", price: 12, cat: "vehicles", colors: GYWC,
+  { ...D, id: "backhoe", tags: "construction", icon: "backhoe", name: "Backhoe", price: 12, cat: "vehicles", colors: GYWC,
     desc: "Complete with a fully positionable rear digging arm and working wheels." },
-  { ...D, id: "tanker-semi", icon: "tanker", name: "Tanker Semi", price: 13, cat: "vehicles", colors: GWC,
+  { ...D, id: "tanker-semi", tags: "truck semi", icon: "tanker", name: "Tanker Semi", price: 13, cat: "vehicles", colors: GWC,
     desc: "A long-haul liquid transporter: a cab pulling a cylindrical tank on a flatbed trailer. The trailer is detachable and comes with 4 spare wheels. The model's wheels work." },
-  { ...D, id: "container-semi", icon: "container", name: "Container Semi", price: 13, cat: "vehicles", colors: GWC,
+  { ...D, id: "container-semi", tags: "truck semi", icon: "container", name: "Container Semi", price: 13, cat: "vehicles", colors: GWC,
     desc: "A heavy freight cab connected to a detachable, rectangular shipping container unit. The trailer detaches, and the container (a hollow rectangular crate) comes on and off the trailer easily." },
-  { ...D, id: "offroad-semi", icon: "offroad", name: "Off-road Semi", price: 12, cat: "vehicles", colors: GWC,
+  { ...D, id: "offroad-semi", tags: "truck semi", icon: "offroad", name: "Off-road Semi", price: 12, cat: "vehicles", colors: GWC,
     desc: "Designed to look like an eight-wheeled Tatra 813. The wheels work." },
   { ...D, id: "dump-truck", icon: "dump", name: "Long Dump Truck", price: 12.5, cat: "vehicles", colors: GYWC,
     desc: "A 6-wheeled dump truck with a dumpable dump bucket and working wheels." },
-  { ...D, id: "bobcat", icon: "bobcat", name: "Bobcat Tractor", price: 8, cat: "vehicles", colors: ["Gray", "Yellow", "Colored"],
+  { ...D, id: "bobcat", tags: "construction loader", icon: "bobcat", name: "Bobcat Tractor", price: 8, cat: "vehicles", colors: ["Gray", "Yellow", "Colored"],
     desc: "A compact 4-wheeled skid-steer utility front loader with a manual front loader arm setup and freely rotating wheels." },
   { ...D, id: "van", icon: "van", name: "Simple Van", price: 7, cat: "vehicles", colors: SEVEN,
     desc: "A hard, angular van with stylized, minimalist features and working wheels." },
   { ...D, id: "car", icon: "car", name: "Simple Car", price: 6.5, cat: "vehicles", colors: SEVEN,
     desc: "A hard, angular SUV/car with stylized, minimalist features and working wheels." },
-  { ...D, id: "gecko", icon: "gecko", name: "Articulated Gecko", price: 10, cat: "articulated", featured: true, colors: ["Green", "Blue", "White", "Colored"],
+  { ...D, id: "gecko", icon: "gecko", name: "Articulated Gecko", price: 10, cat: "animals", featured: true, colors: ["Green", "Blue", "White", "Colored"],
     desc: "A cute little gecko with multiple interlocking tail segments that wiggle organically. The main body is not articulated." },
-  { ...D, id: "chicken", icon: "chicken", name: "Flexi Chicken", price: 8, cat: "articulated", featured: true, colors: SIX,
+  { ...D, id: "chicken", icon: "chicken", name: "Flexi Chicken", price: 8, cat: "animals", featured: true, colors: SIX,
     desc: "A 2D chicken with a swinging, multi-jointed body." },
   { ...D, id: "thumb-piano", icon: "piano", name: "Thumb Piano", price: 14, cat: "desk", colors: SEVEN,
     desc: "A fully playable (though not very musical) acoustic instrument shell fitted with plastic plucking tines." },
   { ...D, id: "thumb-drum", icon: "drum", name: "Thumb Drum", price: 12, cat: "desk", colors: SEVEN,
     desc: "A pocket-sized hand percussion tool that makes distinct hollow tones when used. Includes two attached spring-style thumb drumsticks." },
-  { ...D, id: "wolf", icon: "wolf", name: "Low Poly Wolf", price: 6, cat: "desk", colors: ["Gray", "White"],
+  { ...D, id: "wolf", icon: "wolf", name: "Low Poly Wolf", price: 6, cat: "animals", colors: ["Gray", "White"],
     desc: "A modern, geometric tabletop statue with sharp, artistic polygon facial features. The wolf is howling (at the moon?)." },
-  { ...D, id: "cat", icon: "cat", name: "Cat Statue", price: 5, cat: "desk", colors: GWC,
+  { ...D, id: "cat", icon: "cat", name: "Cat Statue", price: 5, cat: "animals", colors: GWC,
     desc: "A cartoonish cat with a big head, sitting down." },
-  { ...D, id: "wallet", icon: "wallet", name: "Flat Wallet", price: 8, cat: "desk", colors: ["Gray", "Red", "White", "Blue", "Purple", "Colored"],
+  { ...D, id: "wallet", icon: "wallet", name: "Flat Wallet", price: 8, cat: "functional", colors: ["Gray", "Red", "White", "Blue", "Purple", "Colored"],
     desc: "A slim card carrier that fans out up to 5 cards so you can see them all and easily grab the right one." },
   { ...D, id: "fidget", icon: "stick", name: "Fidget Stick", price: 2, cat: "desk", colors: SIX,
     desc: "A small joystick-style fidget. It can't actually be used for a video game." },
-  { ...D, id: "egg", icon: "egg", name: "Fake Egg", price: 5, cat: "desk", colors: ["Gray", "White"],
+  { ...D, id: "egg", tags: "hen chicken", icon: "egg", name: "Fake Egg", price: 5, cat: "functional", colors: ["Gray", "White"],
     desc: "A smooth, seamless oval print, ideal for custom painting projects or showing poultry where to lay eggs." },
-  { ...D, id: "tank-sign", icon: "sign", name: "Fish Tank Sign", price: 5.5, cat: "desk", colors: ["Gray/Black and White"],
+  { ...D, id: "tank-sign", tags: "aquarium", icon: "sign", name: "Fish Tank Sign", price: 5.5, cat: "functional", colors: ["Gray/Black and White"],
     desc: "A sign for the outside of a fish tank that says \"Do not tap or knock on glass. It can stress or harm the animals.\"" },
   { ...D, id: "benchy", icon: "boat", name: "Benchy Boat", price: 5, cat: "desk", colors: SEVEN,
     desc: "The iconic 3D printing benchmark tugboat, included as a fun collector's novelty item." },
 
-  // Mystery boxes: buyers can't choose items or colors. PRICES ARE PLACEHOLDERS: set your own.
-  { ...D, id: "mystery-cars-4", icon: "box", name: "Mystery Car Box (4 Items)", price: 38, cat: "mystery", mystery: true, colors: [],
+  // Mystery boxes: buyers can't choose items or colors.
+  { ...D, id: "mystery-cars-4", icon: "box", name: "Mystery Car Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
     desc: "4 surprise vehicles. You can't choose which ones or what colors." },
-  { ...D, id: "mystery-cars-8", icon: "box", name: "Mystery Car Box (8 Items)", price: 72, cat: "mystery", mystery: true, colors: [],
+  { ...D, id: "mystery-cars-8", icon: "box", name: "Mystery Car Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
     desc: "8 surprise vehicles. You can't choose which ones or what colors." },
-  { ...D, id: "mystery-articulated-4", icon: "box", name: "Mystery Articulated Toy Box (4 Items)", price: 30, cat: "mystery", mystery: true, colors: [],
+  { ...D, id: "mystery-articulated-4", icon: "box", name: "Mystery Articulated Toy Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
     desc: "4 surprise articulated toys. You can't choose which ones or what colors." },
-  { ...D, id: "mystery-articulated-8", icon: "box", name: "Mystery Articulated Toy Box (8 Items)", price: 56, cat: "mystery", mystery: true, colors: [],
+  { ...D, id: "mystery-articulated-8", icon: "box", name: "Mystery Articulated Toy Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
     desc: "8 surprise articulated toys. You can't choose which ones or what colors." },
-  { ...D, id: "mystery-desk-4", icon: "box", name: "Mystery Desk Toy Box (4 Items)", price: 24, cat: "mystery", mystery: true, colors: [],
+  { ...D, id: "mystery-desk-4", icon: "box", name: "Mystery Desk Toy Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
     desc: "4 surprise desk toys and functional items. You can't choose which ones or what colors." },
-  { ...D, id: "mystery-desk-8", icon: "box", name: "Mystery Desk Toy Box (8 Items)", price: 44, cat: "mystery", mystery: true, colors: [],
+  { ...D, id: "mystery-desk-8", icon: "box", name: "Mystery Desk Toy Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
     desc: "8 surprise desk toys and functional items. You can't choose which ones or what colors." }
 ];
 
