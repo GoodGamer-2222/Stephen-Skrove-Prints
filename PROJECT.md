@@ -13,17 +13,20 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - Static site (HTML/CSS/JS, no framework) hosted on GitHub Pages. Orders go through FormSubmit.
 - Files: `index.html`, `style.css`, `app.js` (logic, hash routing), `icons.js` (placeholder icons), `products.js` (shop info, categories, colors, products), plus `favicon.svg`, `favicon.png`, `apple-touch-icon.png`.
 - In `products.js`: `email` = FormSubmit alias `3f9c325b5938415c6dbc39059dd14b69` (order requests go here); `contactEmail` = `stephenskrove@gmail.com` (shown to customers); `area` = Grants Pass.
-- Shop name: "Stephen Skrove 3D Prints" (decided, option A). Chosen because Oregon generally doesn't require an assumed business name registration ($50, renewed every 2 years) when the name includes the owner's real name. Sources were inconsistent on how strict this is, so the owner should confirm with the Oregon Secretary of State and check local business license and income reporting rules. Not legal advice. Fallback if strict: name "Stephen Skrove" with "3D Prints" as a tagline. Owner's first name on the About page: Stephen.
+- Shop name: "Stephen Skrove 3D Prints" (decided, option A). Chosen because Oregon generally doesn't require an assumed business name registration ($50, renewed every 2 years) when the name includes the owner's real name. Sources were inconsistent on how strict this is, so the owner should confirm with the Oregon Secretary of State and check local business license and income reporting rules. Not legal advice. Fallback if strict: name "Stephen Skrove" with "3D Prints" as a tagline. Owner's first name on the About page: Stephen. About text now says selling "in Grants Pass and beyond" since shipping was added.
 
 ## Business decisions
 - Orders are requests only, no online payment. Pay at meetup by cash, Venmo, or Zelle. No tax or shipping handling.
-- Fulfillment: local meetup, maybe local delivery (dropdown option, "ask about fees"). Shipping may come later.
+- Fulfillment (form dropdown): meet up in person, local delivery ("there will be a small additional fee"), or ship it to me.
+- Shipping (decided, ZIP-first option B): the form asks only for a ZIP code. The owner calculates shipping and emails the total, then asks for the full address if the customer goes ahead. Notice on the form and confirmation: shipping adds a small fee and the customer can cancel if it's too much. Payment for shipped orders is sent by email (`shipPayment` in `products.js`, currently Apple Pay or Zelle). The owner ships after payment. Assumed U.S. shipping only.
 - Customers build a "request list" (cart), fill a form (name, email, optional phone, meetup/delivery, notes), and get a confirmation page with next steps.
 
 ## Products (replaced with the owner's full starting list: 23 items + 6 mystery boxes)
-- 5 categories: Animals (gecko, chicken, wolf, cat), Vehicles (12), Desk Toys (thumb piano, thumb drum, fidget stick, Benchy), Functional (flat wallet, fish tank sign, fake egg), Mystery Boxes (6).
+- 5 categories: Animals (12: gecko, chicken, wolf, cat, snake, Flexi Rex, slug, lizard, orca, spider, Flower Dragon, capybara), Vehicles (12), Desk Toys (thumb piano, thumb drum, fidget stick, Benchy), Functional (flat wallet, fish tank sign, fake egg), Mystery Boxes (6).
 - Shop page has live search (product name, `tags`, category keywords; descriptions are not searched, so "car" doesn't return trucks; plural "cars" works) and category buttons. Home page shows only products with `featured: true` (Working Garbage Truck, Articulated Gecko, Flexi Chicken) plus a "See all products" button.
-- Color option "Painted" was renamed "Colored" (rainbow swatch). Fish Tank Sign has one option, "Gray/Black and White". Colors per product follow the owner's list.
+- Color option "Painted" was renamed "Colored" (white swatch with colored splashes). Meaning (owner): printed in white, then colored by hand to look realistic; method (paint or markers) undecided, so the site says "hand-colored". When a customer taps Colored on a product page, a note appears: "Colored means this one is hand-colored to look realistic." FAQ entry says exact coloring may vary slightly. Swatch is white with a few colored splashes. Fish Tank Sign has one option, "Gray/Black and White". Colors per product follow the owner's list.
+- Eight animals were added later at $15 (snake), $8 (Flexi Rex), $5 (slug), $7 (lizard), $8 (orca), $5 (spider), $8 (Flower Dragon), $5 (capybara). Their colors (the 7-color set) and short descriptions are PLACEHOLDERS the owner should check. The lizard reuses the gecko icon.
+- All descriptions were revised to be more descriptive about function and fun, not exact looks (photos will show that). Facts stay as the owner wrote them. Flower Dragon: articulated dragon whose sections look like lotus flowers or roses.
 - Descriptions were lightly tidied. Facts were kept as the owner wrote them.
 - Mystery boxes: a 4-item and an 8-item box for cars, articulated toys, and desk toys/functional items. No color choice (`mystery: true`); the request list shows "Surprise". Prices set by the owner: $25 for a 4-item box, $40 for an 8-item box.
 - Placeholder pictures (owner chose option A): simple flat white icons (truck, semi, gecko, cat, etc.) drawn in code in `icons.js` on a favicon-style square tinted per category. Each product has an `icon` key in `products.js`. Real AI-generated images aren't possible for Claude here. Icons were not visually previewed by Claude (no renderer available), so the owner should check how they look and report any that look off. Replaced automatically when a product gets `images`.
@@ -47,6 +50,8 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 ## Order form (decided: option B)
 - Customer picks meetup or local delivery. Meetup shows a dropdown of public spots from `SHOP.meetupSpots` in `products.js` (plus "work out a spot by email"). Delivery shows an address box instead. Both ask for days/times that work, plus optional notes.
 - `meetupSpots` currently has one spot: "Dutch Bros Coffee, 332 NW 6th St". More can be added.
+- The refund/replace line was removed from the confirmation page (owner tells customers after payment and shipping). It's still in the About page FAQ. Reply time on the confirmation page is now "within a day or two".
+- Bug fixed: the form select's id `ful` shadowed the function of the same name inside the form's inline handler, so the show/hide logic never ran. Function renamed `showFul`. Lesson: avoid function names that match form element ids or names.
 - The confirmation page previously claimed a copy was emailed to the customer. That was wrong (FormSubmit doesn't do that by default), so the sentence was removed.
 
 ## Customer replies (decided: option A)
@@ -86,7 +91,7 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - After feedback, decide on a public launch (local groups) and whether to wait for photos first.
 
 ## Next decision
-- Open items: what "Colored" means for customers, whether to offer an 8-item articulated box with only 2 designs, and feedback on how the icons look.
+- Open items: and feedback on how the icons look.
 
 ## To do
 - [ ] Push latest files to GitHub, test on a phone

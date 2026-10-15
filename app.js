@@ -67,7 +67,7 @@ const views = {
         <p class="price" style="font-size:1.4rem">${money(p.price)}</p>
         <p>${esc(p.desc)}</p>${p.details ? `<p style="color:var(--mute)">${esc(p.details)}</p>` : ""}
         ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}${p.mystery ? `<p class="note">Mystery box: the items and colors are a surprise, so you can't choose them.</p>` : `<b>Color</b>
-        <div class="sw">${swatches(p)}</div><small style="display:block;margin:-.5rem 0 1.2rem;color:var(--mute)">Colors vary slightly from spool to spool.</small><p id="cnote" class="note" hidden>Colored means this one is hand-colored to look realistic.</p>`}
+        <div class="sw">${swatches(p)}</div><small style="display:block;margin:-.5rem 0 1.2rem;color:var(--mute)">Colors vary slightly from spool to spool.</small><p id="chint" class="note" hidden>Colored means this one is hand-colored to look realistic.</p>`}
         <b><label for="q">Quantity</label></b><br>
         <input id="q" type="number" name="q" min="1" max="20" value="1"><br><br>
         <button class="btn" ${p.mystery || avail(p).length ? "" : "disabled"}>Add to request list</button>
@@ -88,12 +88,12 @@ const views = {
       <label class="f" for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email">
       <label class="f" for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel">
       <label class="f" for="ful">How would you like to get your order?</label>
-      <select id="ful" name="fulfillment" onchange="ful()"><option>Meet up in person</option><option>Local delivery (there will be a small additional fee)</option><option>Ship it to me</option></select>
+      <select id="ful" name="fulfillment" onchange="showFul()"><option>Meet up in person</option><option>Local delivery (there will be a small additional fee)</option><option>Ship it to me</option></select>
       <div id="spotbox"><label class="f" for="spot">Meetup spot</label>
       <select id="spot" name="meetup_spot">${(SHOP.meetupSpots || []).map(x => `<option>${esc(x)}</option>`).join("")}<option>We'll work out a public spot by email</option></select></div>
       <div id="addrbox" hidden><label class="f" for="addr">Delivery address</label><input id="addr" name="delivery_address" autocomplete="street-address" disabled></div>
       <div id="shipbox" hidden><label class="f" for="zip">ZIP code (so we can calculate shipping)</label><input id="zip" name="zip_code" inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" autocomplete="postal-code" disabled>
-      <p class="note">Shipping adds a small fee, calculated after you send your request. We'll email you the total with shipping and ask for your full address if you want to go ahead. You can cancel your order if the shipping is too much.</p></div>
+      <p class="note">Shipping cost will be emailed to you. You can cancel if it's too much.</p></div>
       <div id="whenbox"><label class="f" for="when">Days and times that work for you</label><input id="when" name="preferred_times" required placeholder="e.g. weekday evenings after 5, Saturday morning"></div>
       <label class="f" for="notes">Anything else we should know? (optional)</label><textarea id="notes" name="notes" rows="3"></textarea>
       <input class="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -118,7 +118,6 @@ const views = {
     <li>We'll agree on a time and place to meet.</li>
     <li>You pay with ${esc(SHOP.payment)} when you pick up.</li></ol>`}
     <p>Nothing has been charged. If you don't hear back by then, check your spam folder or email us at ${esc(SHOP.contactEmail)}.</p>
-    <p>If a print has a problem, send us a photo and we'll happily refund or replace it.</p>
     <a class="btn" href="#/shop">Keep browsing</a></section>`
 };
 
@@ -130,14 +129,14 @@ function add(e, id) {
   ex ? ex.q += q : cart.push({ id, name: p.name, color, price: p.price, q });
   save(); nav(); $("#added").innerHTML = `Added! <a href="#/order">View request list</a>`;
 }
-const ful = () => {
-  const v = $("#ful").value, del = v.startsWith("Local"), shp = v.startsWith("Ship");
-  $("#spotbox").hidden = del || shp; $("#spot").disabled = del || shp;
+const showFul = () => {
+  const v = $("#ful").value, del = v.startsWith("Local"), shp = v.startsWith("Ship"), meet = !del && !shp;
+  $("#spotbox").hidden = !meet; $("#spot").disabled = !meet;
+  $("#whenbox").hidden = !meet; $("#when").disabled = !meet; $("#when").required = meet;
   $("#addrbox").hidden = !del; $("#addr").disabled = !del; $("#addr").required = del;
   $("#shipbox").hidden = !shp; $("#zip").disabled = !shp; $("#zip").required = shp;
-  $("#whenbox").hidden = shp; $("#when").disabled = shp; $("#when").required = !shp;
 };
-const cnote = () => { const r = document.querySelector('input[name="color"]:checked'); $("#cnote").hidden = !(r && r.value === "Colored"); };
+const cnote = () => { const r = document.querySelector('input[name="color"]:checked'); $("#chint").hidden = !(r && r.value === "Colored"); };
 const qty = (i, d) => { cart[i].q += d; if (cart[i].q < 1) cart.splice(i, 1); save(); render(); };
 const rm = i => { cart.splice(i, 1); save(); render(); };
 const nav = () => $("#cartlink").innerHTML = `Request list <span class="badge${count() ? "" : " zero"}">${count()}</span>`;
@@ -167,7 +166,7 @@ function render() {
   $("#app").innerHTML = v(arg);
   document.title = SHOP.name;
   nav(); window.scrollTo(0, 0);
-  if ($("#cnote")) cnote();
+  if ($("#chint")) cnote();
 }
 $("#brand").textContent = SHOP.name;
 $("#foot").innerHTML = `${esc(SHOP.name)} · ${esc(SHOP.area)} · <a href="mailto:${esc(SHOP.contactEmail)}">${esc(SHOP.contactEmail)}</a> · <a href="mailto:${esc(SHOP.contactEmail)}?subject=Custom%20print%20request">Custom prints</a>`;
