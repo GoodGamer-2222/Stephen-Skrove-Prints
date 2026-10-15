@@ -8,7 +8,12 @@ const total = () => cart.reduce((t, c) => t + c.price * c.q, 0);
 const count = () => cart.reduce((t, c) => t + c.q, 0);
 
 const pics = p => p.images || [];
-const img = p => pics(p).length ? `<div class="pimg"><img src="${pics(p)[0]}" alt="${esc(p.name)}"></div>` : `<div class="ph" role="img" aria-label="${esc(p.name)}">${p.icon || "🧩"}</div>`;
+const mark = p => {
+  const c = (CATS[p.cat] || {}).color || "#0e6f62";
+  const t = p.mystery ? "?" : p.name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+  return `<svg viewBox="0 0 32 32" role="img" aria-label="${esc(p.name)}"><rect x="1" y="1" width="30" height="30" rx="5" fill="${c}"/><rect x="1" y="7.5" width="30" height="3" fill="#f4f6f5"/><rect x="1" y="14.5" width="30" height="3" fill="#f4f6f5"/><rect x="1" y="21.5" width="30" height="3" fill="#f4f6f5"/><rect x="7" y="11" width="18" height="10" rx="3" fill="#fff"/><text x="16" y="18.6" text-anchor="middle" font-size="7.5" font-weight="800" font-family="system-ui,sans-serif" fill="${c}">${t}</text></svg>`;
+};
+const img = p => pics(p).length ? `<div class="pimg"><img src="${pics(p)[0]}" alt="${esc(p.name)}"></div>` : `<div class="ph">${mark(p)}</div>`;
 const gallery = p => {
   const a = pics(p);
   if (!a.length) return img(p);
@@ -22,14 +27,23 @@ const avail = p => p.colors.filter(c => !out(p, c));
 const swatches = p => p.colors.map(c => `<label class="${out(p, c) ? "out" : ""}"><input type="radio" name="color" value="${c}" ${out(p, c) ? "disabled" : c === (avail(p).includes(p.defaultColor) ? p.defaultColor : avail(p)[0]) ? "checked" : ""}><span class="dot" style="background:${COLORS[c] || "#ccc"}"></span>${esc(c)}${out(p, c) ? " (sold out)" : ""}</label>`).join("");
 
 const custom = () => `<p class="note">Want something different, like another color, size, or design? <a href="mailto:${esc(SHOP.contactEmail)}?subject=${encodeURIComponent("Custom print request")}">Email us</a> and tell us what you have in mind. We'll let you know if we can do it and what it would cost.</p>`;
+let sq = "", scat = "";
+const chips = () => ["", ...Object.keys(CATS)].map(k => `<button type="button" class="chip" aria-pressed="${scat === k}" onclick="setCat('${k}')">${k ? CATS[k].label : "All"}</button>`).join("");
+const list = () => {
+  const w = sq.toLowerCase().split(/\s+/).filter(Boolean);
+  const r = PRODUCTS.filter(p => (!scat || p.cat === scat) && w.every(x => `${p.name} ${p.desc} ${CATS[p.cat].label} ${CATS[p.cat].words}`.toLowerCase().includes(x)));
+  return r.length ? r.map(card).join("") : `<p>No matches. Try another word, or <a href="mailto:${esc(SHOP.contactEmail)}?subject=${encodeURIComponent("Custom print request")}">ask about a custom print</a>.</p>`;
+};
+const setQ = v => { sq = v; $("#list").innerHTML = list(); };
+const setCat = k => { scat = k; $(".chips").innerHTML = chips(); $("#list").innerHTML = list(); };
 const views = {
   home: () => `
     <section class="hero sm">
       <h1>3D-printed things, made to order in ${esc(SHOP.area)}.</h1>
       <p>Pick what you like, send a request, and we'll set up a meetup.</p>
     </section>
-    <div class="grid">${PRODUCTS.slice(0, 6).map(card).join("")}</div>
-    ${PRODUCTS.length > 6 ? '<p><a href="#/shop">See all products</a></p>' : ""}
+    <div class="grid">${PRODUCTS.filter(p => p.featured).map(card).join("")}</div>
+    <p><a class="btn" href="#/shop">Browse all ${PRODUCTS.length} products</a></p>
     <div class="layers" aria-hidden="true"></div>
     <section class="steps">
       <div><h3>1. Choose</h3><p>Pick products and colors, then add them to your request list.</p></div>
@@ -37,7 +51,10 @@ const views = {
       <div><h3>3. Meet up</h3><p>We'll reply by email to set a time and place. Pay when you pick up.</p></div>
     </section>`,
 
-  shop: () => `<h2>Shop</h2><div class="grid">${PRODUCTS.map(card).join("")}</div>${custom()}`,
+  shop: () => `<h2>Shop</h2>
+    <input id="sq" type="search" placeholder="Search, like truck, cat, or wallet" aria-label="Search products" value="${esc(sq)}" oninput="setQ(this.value)">
+    <div class="chips" role="group" aria-label="Categories">${chips()}</div>
+    <div class="grid" id="list">${list()}</div>${custom()}`,
 
   product: id => {
     const p = PRODUCTS.find(x => x.id === id);
@@ -47,12 +64,12 @@ const views = {
       <form onsubmit="add(event,'${p.id}')">
         <h1 style="font-size:2.2rem">${esc(p.name)}</h1>
         <p class="price" style="font-size:1.4rem">${money(p.price)}</p>
-        <p>${esc(p.desc)}</p><p style="color:var(--mute)">${esc(p.details)}</p>
-        ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}<b>Color</b>
-        <div class="sw">${swatches(p)}</div><small style="display:block;margin:-.5rem 0 1.2rem;color:var(--mute)">Colors vary slightly from spool to spool.</small>
+        <p>${esc(p.desc)}</p>${p.details ? `<p style="color:var(--mute)">${esc(p.details)}</p>` : ""}
+        ${p.note ? `<p class="note">${esc(p.note)}</p>` : ""}${p.mystery ? `<p class="note">Mystery box: the items and colors are a surprise, so you can't choose them.</p>` : `<b>Color</b>
+        <div class="sw">${swatches(p)}</div><small style="display:block;margin:-.5rem 0 1.2rem;color:var(--mute)">Colors vary slightly from spool to spool.</small>`}
         <b><label for="q">Quantity</label></b><br>
         <input id="q" type="number" name="q" min="1" max="20" value="1"><br><br>
-        <button class="btn" ${avail(p).length ? "" : "disabled"}>Add to request list</button>
+        <button class="btn" ${p.mystery || avail(p).length ? "" : "disabled"}>Add to request list</button>
         <p id="added" role="status"></p>
       </form></div>`;
   },
@@ -102,7 +119,7 @@ const views = {
 function add(e, id) {
   e.preventDefault();
   const p = PRODUCTS.find(x => x.id === id), f = e.target;
-  const color = f.color.value, q = Math.max(1, Math.min(20, +f.q.value || 1));
+  const color = f.color ? f.color.value : "Surprise", q = Math.max(1, Math.min(20, +f.q.value || 1));
   const ex = cart.find(c => c.id === id && c.color === color);
   ex ? ex.q += q : cart.push({ id, name: p.name, color, price: p.price, q });
   save(); nav(); $("#added").innerHTML = `Added! <a href="#/order">View request list</a>`;

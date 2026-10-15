@@ -20,14 +20,15 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - Fulfillment: local meetup, maybe local delivery (dropdown option, "ask about fees"). Shipping may come later.
 - Customers build a "request list" (cart), fill a form (name, email, optional phone, meetup/delivery, notes), and get a confirmation page with next steps.
 
-## Products (all PLA, all in the same 8 colors)
-- Benchy Boat, $5.
-- Disk Shooter, $12 (owner considered $10 to $15, hasn't objected to $12). Includes 5 disks, likely the same color as the launcher but may vary. Has a small-parts/choking warning, not for under 3, don't aim at faces.
-- Whistle, $8. Loud. No small parts.
-- Colors: Silk Gold, Silk Red, Black / Blue Glitter, Black / Gold Glitter, White, Gray, Purple, Blue.
-- Descriptions are Claude's guesses. Owner should check them and add sizes.
-- Photos: none yet, products show placeholder icons until photos are added (see Photos).
-- Check that each design's license allows selling prints (Benchy is generally fine with credit; the other two unverified).
+## Products (replaced with the owner's full starting list: 23 items + 6 mystery boxes)
+- 4 categories: Vehicles (12), Articulated Toys (2), Desk Toys & Functional (9, includes Benchy, statues, thumb piano/drum, wallet, fidget stick, fake egg, fish tank sign), Mystery Boxes (6).
+- Shop page has live search (name, description, category keywords) and category buttons. Home page shows only products with `featured: true` (Working Garbage Truck, Articulated Gecko, Flexi Chicken) plus a "Browse all" button.
+- Color option "Painted" was renamed "Colored" (rainbow swatch). Fish Tank Sign has one option, "Gray/Black and White". Colors per product follow the owner's list.
+- Descriptions were lightly tidied. Facts were kept as the owner wrote them.
+- Mystery boxes: a 4-item and an 8-item box for cars, articulated toys, and desk toys/functional items. No color choice (`mystery: true`); the request list shows "Surprise". Prices (38/72, 30/56, 24/44) are PLACEHOLDERS the owner must set.
+- Placeholder pictures are now generated in code (`mark()` in `app.js`): the favicon-style striped square, tinted per category, with the product's initials ("?" for mystery boxes). They are replaced automatically when a product gets `images`.
+- Removed with this change: Disk Shooter, Whistle, silk/glitter colors, and the Disk Shooter FAQ and small-parts notice (they weren't on the new list). Restore from the old `products.js` if wanted.
+- Photos: see Photos section. Check that each design's license allows selling prints (still open).
 
 ## Design decisions made
 - Color options: swatches that hint at the finish (silk sheen, glitter speckles), plus a per-product `soldOut` list. A note says colors vary slightly by spool. Later, real per-color photos for best sellers.
@@ -85,7 +86,7 @@ Paste or upload this file at the start of a new chat so Claude can pick up where
 - After feedback, decide on a public launch (local groups) and whether to wait for photos first.
 
 ## Next decision
-- To be decided after the soft launch feedback: public launch timing, fixes from feedback, then the visual pass around real photos and the link preview image.
+- Mystery box prices and rules (placeholders now), what "Colored" means for customers, and whether the 8-item articulated box is realistic with only 2 articulated designs.
 
 ## To do
 - [ ] Push latest files to GitHub, test on a phone
