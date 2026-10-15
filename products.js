@@ -8,7 +8,8 @@ const SHOP = {
   ownerName: "Stephen",                  // your first name, shown on the About page (leave "" to hide)
   ownerPhoto: "",                       // e.g. "images/me.jpg" (leave "" for no photo)
   area: "Grants Pass",                  // shown on the home page and footer
-  payment: "cash, Venmo, or Zelle"     // shown on the confirmation page
+  payment: "cash, Venmo, or Zelle",    // how meetup customers pay
+  shipPayment: "Apple Pay or Zelle"    // payment options you send to shipping customers (edit to match what you offer)
 };
 
 // Categories: "words" are extra search keywords. "color" tints the placeholder picture.
@@ -20,11 +21,11 @@ const CATS = {
   mystery:    { label: "Mystery Boxes", color: "#b8741a", words: "mystery box boxes surprise gift random" }
 };
 
-// Color swatches (any CSS background). "Colored" shows as a rainbow.
+// Color swatches (any CSS background). "Colored" shows as white with colored splashes.
 const COLORS = {
   Green: "#2f8f4e", Gray: "#8a8f94", White: "#f2f2f2", Yellow: "#e8c52a", Red: "#c8362e",
   Blue: "#2f5fb8", Purple: "#7a4bb5",
-  Colored: "linear-gradient(90deg,#c8362e,#e8812a,#e8d02a,#2f8f4e,#2f5fb8,#7a4bb5)",
+  Colored: "radial-gradient(circle at 25% 30%,#c8362e 0 3px,transparent 3.5px),radial-gradient(circle at 72% 25%,#2f5fb8 0 3px,transparent 3.5px),radial-gradient(circle at 62% 74%,#2f8f4e 0 3px,transparent 3.5px),radial-gradient(circle at 28% 72%,#e8c52a 0 2.5px,transparent 3px),#f2f2f2",
   "Gray/Black and White": "linear-gradient(90deg,#444 50%,#f2f2f2 50%)"
 };
 const GWC = ["Gray", "White", "Colored"];
@@ -62,10 +63,26 @@ const PRODUCTS = [
     desc: "A hard, angular van with stylized, minimalist features and working wheels." },
   { ...D, id: "car", icon: "car", name: "Simple Car", price: 6.5, cat: "vehicles", colors: SEVEN,
     desc: "A hard, angular SUV/car with stylized, minimalist features and working wheels." },
-  { ...D, id: "gecko", icon: "gecko", name: "Articulated Gecko", price: 10, cat: "animals", featured: true, colors: ["Green", "Blue", "White", "Colored"],
+  { ...D, id: "gecko", tags: "lizard reptile", icon: "gecko", name: "Articulated Gecko", price: 10, cat: "animals", featured: true, colors: ["Green", "Blue", "White", "Colored"],
     desc: "A cute little gecko with multiple interlocking tail segments that wiggle organically. The main body is not articulated." },
   { ...D, id: "chicken", icon: "chicken", name: "Flexi Chicken", price: 8, cat: "animals", featured: true, colors: SIX,
     desc: "A 2D chicken with a swinging, multi-jointed body." },
+  { ...D, id: "snake", icon: "snake", tags: "reptile", name: "Articulated Snake", price: 15, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated snake." },
+  { ...D, id: "rex", icon: "rex", tags: "dinosaur dino", name: "Flexi Rex", price: 8, cat: "animals", colors: SEVEN,
+    desc: "A flat, 2D dinosaur with a partly articulated body." },
+  { ...D, id: "slug", icon: "slug", name: "Articulated Slug", price: 5, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated slug." },
+  { ...D, id: "lizard", icon: "gecko", tags: "reptile", name: "Articulated Lizard", price: 7, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated lizard." },
+  { ...D, id: "orca", icon: "orca", tags: "whale", name: "Articulated Orca", price: 8, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated orca." },
+  { ...D, id: "spider", icon: "spider", name: "Articulated Spider", price: 5, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated spider." },
+  { ...D, id: "flower-dragon", icon: "dragon", name: "Flower Dragon", price: 8, cat: "animals", colors: SEVEN,
+    desc: "A flower dragon." },
+  { ...D, id: "capybara", icon: "capybara", name: "Articulated Capybara", price: 5, cat: "animals", colors: SEVEN,
+    desc: "A jointed, articulated capybara." },
   { ...D, id: "thumb-piano", icon: "piano", name: "Thumb Piano", price: 14, cat: "desk", colors: SEVEN,
     desc: "A fully playable (though not very musical) acoustic instrument shell fitted with plastic plucking tines." },
   { ...D, id: "thumb-drum", icon: "drum", name: "Thumb Drum", price: 12, cat: "desk", colors: SEVEN,
@@ -103,9 +120,11 @@ const PRODUCTS = [
 // Questions shown on the About page. Edit freely: each item is ["question", "answer"].
 const FAQ = [
   ["How does ordering work?", `Pick what you like and add it to your request list, then send the request. We'll email you from ${SHOP.contactEmail} to confirm availability and the total, and to set up a meetup.`],
-  ["Do I pay online?", `No. Nothing is charged when you send a request. You pay with ${SHOP.payment} when you pick up.`],
-  ["Where do we meet?", `At a public spot in ${SHOP.area}, which you pick on the order form. Local delivery may be possible too, so ask about fees.`],
+  ["Do I pay online?", `No. Nothing is charged when you send a request. For meetups, you pay with ${SHOP.payment} when you pick up. For shipped orders, we'll email you the total with shipping and the payment info (${SHOP.shipPayment}).`],
+  ["Where do we meet?", `At a public spot in ${SHOP.area}, which you pick on the order form. Local delivery adds a small additional fee.`],
+  ["Do you ship?", `Yes. Choose "Ship it to me" on the order form. Shipping adds a small fee, which we calculate and email you before anything is charged. If the shipping is too much, you can cancel your order.`],
   ["Are the colors exact?", "Colors vary slightly from spool to spool. Tell us if a particular color matters."],
+  ["What does \"Colored\" mean?", "Colored items are printed in white and then colored by hand to look realistic, so the exact coloring may vary slightly."],
   ["How do mystery boxes work?", "Each box holds 4 or 8 items from one category: cars, articulated toys, or desk toys and functional items. The items and colors are a surprise, so you can't choose them."],
   ["What are the products made of?", "PLA plastic, printed on a 3D printer."],
   ["What if there's a problem with my order?", `Send a photo of the problem to ${SHOP.contactEmail} and we'll happily refund or replace it.`],

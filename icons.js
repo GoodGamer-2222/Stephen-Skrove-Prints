@@ -27,5 +27,12 @@ const ICONS = {
   egg: c => `<path d="M16 5c5 0 8 8 8 13a8 8 0 01-16 0c0-5 3-13 8-13z"/>`,
   sign: c => `<rect x="4" y="9" width="24" height="14" rx="2"/><rect x="8" y="13" width="16" height="2" fill="${c}" stroke="none"/><rect x="8" y="17" width="11" height="2" fill="${c}" stroke="none"/>`,
   boat: c => `<rect x="12" y="6" width="4" height="5"/><rect x="10" y="10" width="9" height="7"/><path d="M3 17h26l-4 7H8z"/>`,
+  snake: c => `${[[6, 23, 2.2], [10, 21, 2.4], [14, 19.5, 2.6], [18, 17, 2.7], [21, 13, 2.8], [23, 9, 3.4]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}<circle cx="24" cy="8.4" r=".9" fill="${c}" stroke="none"/>`,
+  rex: c => `<path d="M7 14L1 20l8-1z"/><rect x="11" y="20" width="3" height="6"/><rect x="17" y="20" width="3" height="6"/><ellipse cx="14" cy="16" rx="8" ry="5"/><circle cx="24" cy="10" r="4"/><rect x="24" y="9" width="6" height="4" rx="2"/><circle cx="25" cy="9" r=".9" fill="${c}" stroke="none"/>`,
+  slug: c => `<path d="M3 22c0-6 5-9 12-9s12 3 12 9z"/><path d="M23 14l2-6M26 15l4-5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="25" cy="8" r="1.3"/><circle cx="30" cy="10" r="1.3"/>`,
+  orca: c => `<path d="M26 17l5-5v10z"/><path d="M12 12l4-6 3 7z"/><ellipse cx="15" cy="17" rx="12" ry="6"/><ellipse cx="9" cy="16" rx="2.2" ry="1.2" fill="${c}" stroke="none"/>`,
+  spider: c => `<path d="M12 14L4 9M12 17L3 18M12 19L5 25M20 14l8-5M20 17l9 1M20 19l7 6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="16" cy="17" r="5"/><circle cx="16" cy="10.5" r="3"/>`,
+  dragon: c => `<path d="M6 19l-4 4 8-1z"/><path d="M10 14L5 5l9 6z"/><ellipse cx="14" cy="18" rx="8" ry="5"/><circle cx="24" cy="11" r="4"/><rect x="24" y="10" width="6" height="4" rx="2"/><circle cx="27" cy="22" r="2.5"/><circle cx="27" cy="22" r="1" fill="${c}" stroke="none"/>`,
+  capybara: c => `<rect x="8" y="20" width="3" height="5"/><rect x="19" y="20" width="3" height="5"/><rect x="5" y="12" width="20" height="9" rx="4"/><rect x="21" y="9" width="8" height="8" rx="3"/><circle cx="22" cy="8.5" r="1.5"/><circle cx="26" cy="12" r=".9" fill="${c}" stroke="none"/>`,
   box: c => `<rect x="5" y="9" width="22" height="16" rx="2"/><text x="16" y="21.5" text-anchor="middle" font-size="12" font-weight="800" font-family="system-ui,sans-serif" fill="${c}" stroke="none">?</text>`
 };
