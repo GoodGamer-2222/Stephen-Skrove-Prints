@@ -40,9 +40,9 @@ const SIX = ["Gray", "Yellow", "Red", "White", "Blue", "Colored"];
 const D = { soldOut: [], tags: "", note: "", images: [], defaultColor: "" };
 const PRODUCTS = [
   { ...D, id: "garbage-truck", icon: "garbage", name: "Garbage Truck", price: 15, cat: "vehicles", featured: true, colors: GGWC,
-    desc: "A garbage truck full of moving mechanics. The rear hopper and bed tilt mechanism haul mini payloads, and a working trash can arm picks up the trash cans. It comes with 2 trash cans that have working lids and wheels, and the truck's wheels turn." },
+    desc: "A garbage truck full of moving mechanics. The rear hopper and bed tilt mechanism haul mini payloads, and a working trash can arm picks up the trash cans. It's wheels move, and it comes with 2 trash cans that have working lids and wheels." },
   { ...D, id: "rocket-truck", icon: "rocket", name: "Rocket Launcher Truck", price: 13, cat: "vehicles", colors: GGWC,
-    desc: "A rugged tactical cargo carrier with a moving, rotating rocket pod assembly. The wheels move too, so it rolls along. Great for pretend play or a desk display. Based on the RM-70 Vampire 4D rocket launcher. Design by SHR3D.eu on Printables." },
+    desc: "A rugged truck with a moving, rotating rocket pod assembly. The wheels move too, so it rolls along. Great for pretend play or a desk display. Based on the RM-70 Vampire 4D rocket launcher. Design by SHR3D.eu on Printables." },
   { ...D, id: "tow-truck", note: "Small parts warning: this model has small parts, so it is not suitable for small children.", icon: "tow", name: "Flatbed Tow Truck", price: 14.5, cat: "vehicles", colors: GWC,
     desc: "A flatbed tow truck with a functional ramp on the back for driving other model cars (not included) onto the flatbed. Load one up and haul it away. The ramp folds and the wheels rotate. Design by SHR3D.eu on Printables." },
   { ...D, id: "cement-mixer", tags: "truck", icon: "mixer", name: "Cement Mixer", price: 14, cat: "vehicles", colors: GWC,
@@ -70,7 +70,7 @@ const PRODUCTS = [
   { ...D, id: "snake", icon: "snake", tags: "reptile", name: "Articulated Snake", price: 15, cat: "animals", colors: SEVEN,
     desc: "An articulated snake with a long, jointed body that bends and wiggles when you move it. Pose it, coil it up, or just fidget with it." },
   { ...D, id: "rex", icon: "rex", tags: "dinosaur dino", name: "Flexi Rex", price: 8, cat: "animals", colors: SEVEN,
-    desc: "A flat, 2D dinosaur with a partly articulated body, so it wiggles and flexes when you move it. A fun fidget or desk buddy." },
+    desc: "A flat, 2D dinosaur with an articulated body, so it wiggles and flexes when you move it. A fun fidget or desk buddy." },
   { ...D, id: "slug", icon: "slug", name: "Articulated Slug", price: 5, cat: "animals", colors: SEVEN,
     desc: "An articulated slug with a jointed body that bends and wiggles when you move it. A quirky little fidget or desk buddy." },
   { ...D, id: "lizard", icon: "gecko", tags: "reptile", name: "Articulated Lizard", price: 7, cat: "animals", colors: SEVEN,
@@ -88,7 +88,7 @@ const PRODUCTS = [
   { ...D, id: "thumb-drum", icon: "drum", name: "Thumb Drum", price: 12, cat: "desk", colors: SEVEN,
     desc: "A pocket-sized hand percussion tool that makes distinct hollow tones when you play it. Includes two attached spring-style thumb drumsticks. To play, hold the finger notches between your index and middle fingers and flick the drumstick lever with your thumbnail. Design by LoboCNC on Printables." },
   { ...D, id: "wolf", icon: "wolf", name: "Low Poly Wolf", price: 6, cat: "animals", colors: ["Gray", "White"],
-    desc: "A modern, geometric tabletop statue with sharp, artistic polygon features. The wolf is howling (at the moon?). A good desk or shelf decoration. About 50 × 60 × 100 mm. Design by Sarathy Srinath on Printables." },
+    desc: "A modern, geometric tabletop statue with sharp, artistic polygon features. A good desk or shelf decoration. About 50 × 60 × 100 mm. Design by Sarathy Srinath on Printables." },
   { ...D, id: "cat", icon: "cat", name: "Cat Statue", price: 5, cat: "animals", colors: GWC,
     desc: "A cartoonish cat with a big head, sitting down. A cute little desk or shelf decoration. Design by CHICKEMM on Printables." },
   { ...D, id: "wallet", icon: "wallet", name: "Flat Wallet", price: 8, cat: "functional", colors: ["Gray", "Red", "White", "Blue", "Purple", "Colored"],
@@ -100,28 +100,28 @@ const PRODUCTS = [
   { ...D, id: "tank-sign", tags: "aquarium", icon: "sign", name: "Fish Tank Sign", price: 5.5, cat: "functional", colors: ["Gray/Black and White"],
     desc: "A sign for the outside of a fish tank that says \"Do not tap or knock on glass. It can stress or harm the animals.\" A friendly reminder for visitors." },
   { ...D, id: "benchy", icon: "boat", name: "Benchy Boat", price: 5, cat: "desk", colors: SEVEN,
-    desc: "The iconic 3D printing benchmark tugboat, included as a fun collector's novelty item. A classic for anyone who loves 3D printing." },
+    desc: "The iconic 3D printing benchmark tugboat, a fun collector's novelty item. A classic for anyone who loves 3D printing." },
 
   // Mystery boxes: buyers can't choose items or colors.
   { ...D, id: "mystery-cars-4", icon: "box", name: "Mystery Car Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
-    desc: "Open it to find out what's inside: 4 surprise vehicles. You can't choose which ones or what colors." },
+    desc: "Open it to find out what's inside: 4 surprise vehicles. You can't choose which ones or what colors, which adds to the fun." },
   { ...D, id: "mystery-cars-8", icon: "box", name: "Mystery Car Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
     desc: "Open it to find out what's inside: 8 surprise vehicles. You can't choose which ones or what colors." },
   { ...D, id: "mystery-articulated-4", icon: "box", name: "Mystery Articulated Toy Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
-    desc: "Open it to find out what's inside: 4 surprise articulated toys. You can't choose which ones or what colors." },
+    desc: "Open it to find out what's inside: 4 surprise articulated toys. You can't choose which ones or what colors, which adds to the fun." },
   { ...D, id: "mystery-articulated-8", icon: "box", name: "Mystery Articulated Toy Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
-    desc: "Open it to find out what's inside: 8 surprise articulated toys. You can't choose which ones or what colors." },
+    desc: "Open it to find out what's inside: 8 surprise articulated toys. You can't choose which ones or what colors, which adds to the fun." },
   { ...D, id: "mystery-desk-4", icon: "box", name: "Mystery Desk Toy Box (4 Items)", price: 25, cat: "mystery", mystery: true, colors: [],
-    desc: "Open it to find out what's inside: 4 surprise desk toys and functional items. You can't choose which ones or what colors." },
+    desc: "Open it to find out what's inside: 4 surprise desk toys and functional items. You can't choose which ones or what colors, which adds to the fun." },
   { ...D, id: "mystery-desk-8", icon: "box", name: "Mystery Desk Toy Box (8 Items)", price: 40, cat: "mystery", mystery: true, colors: [],
-    desc: "Open it to find out what's inside: 8 surprise desk toys and functional items. You can't choose which ones or what colors." }
+    desc: "Open it to find out what's inside: 8 surprise desk toys and functional items. You can't choose which ones or what colors, which adds to the fun." }
 ];
 
 // Questions shown on the About page. Edit freely: each item is ["question", "answer"].
 const FAQ = [
   ["How does ordering work?", `Pick what you like and add it to your request list, then send the request. We'll email you from ${SHOP.contactEmail} to confirm availability and the total, and to set up a meetup.`],
-  ["Do I pay online?", `No. Nothing is charged when you send a request. For meetups, you pay with ${SHOP.payment} when you pick up. For shipped orders, we'll email you the total with shipping and the payment info (${SHOP.shipPayment}).`],
-  ["Where do we meet?", `At a public spot in ${SHOP.area}, which you pick on the order form. Local delivery adds a small additional fee.`],
+  ["Do I pay online?", `No. Nothing is charged when you send a request. For meetups, you pay with ${SHOP.payment} when you pick up. For shipped or delivered orders, we'll email you the total with cost and the payment info (${SHOP.shipPayment}).`],
+  ["Where do we meet if I choose local meetup?", `At a public spot in ${SHOP.area}, which you pick on the order form. Local delivery adds a small additional fee.`],
   ["Do you ship?", `Yes. Choose "Ship it to me" on the order form. Shipping adds a small fee, which we calculate and email you before anything is charged. If the shipping is too much, you can cancel your order.`],
   ["Are the colors exact?", "Colors vary slightly from spool to spool. Tell us if a particular color matters."],
   ["What does \"Colored\" mean?", "Colored items are printed in white and then colored by hand to look realistic, so the exact coloring may vary slightly."],
